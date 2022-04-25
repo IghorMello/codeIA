@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>IA - Atividade de Rota de Busca</title>
+
+    <!-- Ínicio dos Estilos Customizados -->
+    <link
+      rel="shortcut icon"
+      href="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Download-Computer-256.png"
+    />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""
+    />
+    <!-- Final dos Estilos Customizados -->
+
+    <!-- Ínicio dos Scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""
+    ></script>
+    <!-- Final dos Scripts -->
+
+    <!-- Ínicio dos Scripts Customizados -->
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .leaflet-container {
+        height: 400px;
+        width: 600px;
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      #map {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+    <!-- Final dos Scripts Customizados -->
+  </head>
+
+  <body>
+    <div class="min-h-screen flex flex-col justify-center bg-indigo-600">
+      <div class="bg-white mx-auto max-w-md py-8 px-10 shadow rounded-lg">
+        <picture class="mb-4">
+          <img
+            draggable="false"
+            src="{{ url_for('static', filename='image/alert.svg') }}"
+            alt="Ícones"
+          />
+        </picture>
+
+        <form method="POST">
+          {% if data == '' %}
+          <!-- Ínicio do item de Seleção -->
+          <section class="mb-4">
+            <select
+              name="algoritmo"
+              id="algoritmo"
+              required
+              class="mt-5 appearance-none block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
+            >
+              <option selected disabled>Selecione o Algoritmo</option>
+              <option value="custo-uniforme">Custo Uniforme</option>
+              <option value="greedy">Greedy</option>
+              <option value="a-estrela">A Estrela</option>
+              <option value="amplitude">Amplitude</option>
+              <option value="profundidade">Profundidade</option>
+              <option value="profundidade_limitada">Profundidade Limitada</option>
+              <option value="bidirecional">Bidirecional</option>
+              <option value="aprofundamento_iterativo">Aprofundamento Interativo</option>
+            </select>
+
+            <div id="origem_primeiro_metodo">
+              <select
+                name="origem"
+                required
+                id="origem"
+                class="mt-5 appearance-none hidden block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
+              >
+                <option selected disabled>Selecione a Origem</option>
+                {% for data in array_nos %}
+                <option value="{{ data }}">{{ data }}</option>
+                {% endfor %}
+              </select>
+
+              <select
+                name="destino"
+                id="destino"
+                required
+                class="mt-5 appearance-none hidden w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
+              >
+                <option selected disabled>Selecione Destino</option>
+                {% for data in array_nos %}
+                <option value="{{ data }}">{{ data }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <div id="origem_segundo_metodo" class="hidden">
+              <select
+                name="origem_1"
+                required
+                id="origem_1"
+                class="mt-5 appearance-none hidden block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
+              >
+                <option selected disabled>Selecione a Primeira Origem</option>
+                {% for data in array_nos %}
+                <option value="{{ data }}">{{ data }}</option>
+                {% endfor %}
+              </select>
+
+              <select
+                name="origem_2"
+                required
+                id="origem_2"
+                class="mt-5 appearance-none hidden block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
+              >
+                <option selected disabled>Selecione a Segunda Origem</option>
+                {% for data in array_nos %}
+                <option value="{{ data }}">{{ data }}</option>
+                {% endfor %}
+              </select>
+
+              <select
+                name="destino_1"
+                id="destino_1"
+                required
+                class="mt-5 appearance-none hidden w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
+              >
+                <option selected disabled>Selecione Destino</option>
+                {% for data in array_nos %}
+                <option value="{{ data }}">{{ data }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </section>
+
+          <section class="mb-4">
+            <button
+              id="verificar"
+              class="inline-block  w-full px-8 py-4 leading-none text-white bg-indigo-600 hover:bg-indigo-400 font-semibold rounded shadow"
+            >
+              Verificar
+            </button>
+          </section>
+          <!-- Final do item de Seleção -->
+
+          {% else %}
+
+          <section class="mb-4 mt-5" id="resultado">
+            <label style='text-align: justify'
+              class="appearance-none block w-full mt-2 px-4 py-3 leading-tight bg-gray-100 focus:bg-gra border border-gray-500 focus:border-gray-700 rounded focus:outline-none">
+            A melhor rota analisada passa pelas seguintes cidades: 
+            </label>
+
+            <!-- Ínicio do Mapa -->
+            <div id="map" class="mt-5" style="border-radius: 1rem; width: 600px; height: 300px"></div>
+            <!-- Final do Mapa -->
+
+            <label style='text-align: justify'
+              class="appearance-none block w-full mt-5 px-4 py-3 leading-tight bg-gray-100 focus:bg-gra border border-gray-500 focus:border-gray-700 rounded focus:outline-none">
+            {% for caminhos in caminho %}
+            {{ caminhos }}<br>
+            {% endfor %} 
+            </label>
+
+            <input
+              type="text"
+              value="Com Custo de {{ custo }} Km"
+              disabled
+              class="mt-5 appearance-none block w-full px-4 py-3 leading-tight bg-gray-100 focus:bg-gra border border-gray-500 focus:border-gray-700 rounded focus:outline-none"
+            />
+          </section>
+          <!-- Final dos Resultados -->
+
+          <!-- Ínicio do item de voltar -->
+          <section class="nb-4 mt-5">
+            <p>
+              Gostaria de realizar a verificação novamente?
+              <a
+                href="{{ url_for('index') }}"
+                class="inline-block mt-3 text-center w-full px-8 py-4 leading-none text-white bg-indigo-600 hover:bg-indigo-400 rounded"
+              >
+                Voltar
+              </a>
+            </p>
+          </section>
+          <!-- Final do item de voltar -->
+          {% endif %}
+        </form>
+      </div>
+    </div>
+
+    <!-- Ínicio do Scripts -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script>
+      var map = L.map("map").setView([-22.574295, -44.968571], 8);
+      L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+      }).addTo(map);
+      var result = [];
+      for(var i in {{todo_caminho}})
+          result.push([i,{{todo_caminho}}[i]]);
+      data = {{todo_caminho}}.length
+      for (var i = 0; i < data; i++) {
+        marker = new L.marker([result[i][1]['lat'], result[i][1]['long']])
+        .bindPopup(result[i][1]['nome'])
+        .addTo(map);
+      }
+      var polygon_fork = []
+      for (var i = 0; i < data; i++) {
+        polygon_fork.push([result[i][1]['lat'], result[i][1]['long']])
+      }
+      var polygon = L.polygon([polygon_fork]).addTo(map).bindPopup('Ligação entre as cidades.');
+    </script>
+    <!-- Final do Scripts -->
+  </body>
+</html>
