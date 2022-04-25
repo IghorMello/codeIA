@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="API" title="API" src="./static/1.gif" width="900px" />
+    <img alt="API" title="API" src="./.github/1.gif" width="900px" />
 </p>
 
 <p align="center"> 
