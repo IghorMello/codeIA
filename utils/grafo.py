@@ -1,3 +1,4 @@
+# Grafos utilizados nos métodos Custos Uniformes, Greedy e A*
 
 grafo = [
     [["Cachoeira Paulista", 18], ["Lavrinhas", 7], ["Piquete", 25], ["Passa Quatro", 33]], # Cruzeiro

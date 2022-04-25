@@ -1,6 +1,8 @@
 from utils.grafo_amplitude import grafo
 from utils.nos_amplitude import nos
 
+# Busca utilizada nos Métodos de Amplitude, Profundidade Limitada, Profundidade, Aprofundamento Interativo, Bidirecional,
+
 class No(object):
     def __init__(self, pai=None, estado=None, valor1=None, valor2=None, anterior=None, proximo=None):
         self.pai       = pai
@@ -512,7 +514,5 @@ class busca_amplitude(object):
                         caminho += l4.exibeCaminho()
                         caminho += l2.exibeCaminho1(novo)
                         return caminho[::-1]
-                        
                 primeiro=False
-
         return "caminho não encontrado"

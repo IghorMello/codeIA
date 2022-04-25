@@ -1,3 +1,4 @@
+# Cidades com suas devidas coordenadas (latitude e Longitude)
 
 nos = [
        {"nome": "Cruzeiro", "lat":"-22.51707", "long":"-44.88055"},

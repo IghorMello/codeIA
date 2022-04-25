@@ -1,3 +1,4 @@
+# Grafos utilizados nos Métodos de Amplitude, Profundidade Limitada, Profundidade, Aprofundamento Interativo, Bidirecional,
 
 grafo = [
     ["Cachoeira Paulista", "Lavrinhas", "Piquete", "Passa Quatro"], # Cruzeiro

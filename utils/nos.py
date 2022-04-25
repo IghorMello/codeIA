@@ -1,3 +1,4 @@
+# Nós utilizados nos métodos Custos Uniformes, Greedy e A*
 
 nos = ["Cruzeiro",
        "Queluz",

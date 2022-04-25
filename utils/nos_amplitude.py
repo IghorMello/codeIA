@@ -1,3 +1,4 @@
+# Nós utilizados nos Métodos de Amplitude, Profundidade Limitada, Profundidade, Aprofundamento Interativo, Bidirecional,
 
 nos = ["Cruzeiro",
        "Queluz",

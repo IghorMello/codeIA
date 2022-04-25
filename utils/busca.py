@@ -1,6 +1,8 @@
 from utils.grafo import grafo
 from utils.nos import nos
 
+# Busca utilizada nos métodos Custos Uniformes, Greedy e A*
+
 class No(object):
     def __init__(self, pai=None, estado=None, valor1=None, valor2=None, anterior=None, proximo=None):
         self.pai       = pai
@@ -293,7 +295,7 @@ class busca(object):
                         linha.append(novo)
                         linha.append(v2)
                         visitado.append(linha)
-        return "Caminho não encontrado"      
-    
+        return "Caminho não encontrado"
+
 # Heurística Itajuba
 h = [55,72,105,50,53,60,36,80,51,0,54,56,93,68,35,55,52,55,80,51,63,56]
