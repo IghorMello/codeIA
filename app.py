@@ -1,7 +1,6 @@
 import string
 import hashlib
 from flask import Flask, render_template, Blueprint, jsonify, flash, request, redirect, url_for, session
-from flask_ngrok import run_with_ngrok
 
 from utils.nos_lat_long import nos as nos_lat_long
 from utils.busca_amplitude import busca_amplitude
@@ -9,7 +8,6 @@ from utils.busca import busca
 from utils.nos import nos
 
 app = Flask(__name__)
-# run_with_ngrok(app)
 
 # ---------------------------------------
 # Chave da Aplicação FLask
@@ -216,5 +214,5 @@ def not_found(error=None):
 # ---------------------------------------
 
 if __name__ == '__main__':
-  # app.run()
-  app.run(host='0.0.0.0', debug=True, port=8080)
+  app.run()
+  # app.run(host='0.0.0.0', debug=True, port=8080)
